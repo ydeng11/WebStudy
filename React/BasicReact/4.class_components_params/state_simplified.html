@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello react</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Weather extends React.Component {
+        state = {
+          isHot: true,
+        };
+        // Arrow functions inherit the `this` value from the surrounding context.
+        changeWeather = () => {
+          this.setState({
+            isHot: !this.state.isHot,
+          });
+        };
+        render() {
+          const isHot = this.state.isHot;
+          return <h2 onClick={this.changeWeather}>Today is {isHot ? "hot" : "cold"}.</h2>;
+        }
+      }
+
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+    </script>
+  </body>
+</html>

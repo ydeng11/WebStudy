@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Create Ref</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- add data type restrictions -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <script type="text/babel">
+      class Demo extends React.Component {
+        myRef = React.createRef();
+        textRef = React.createRef();
+        render() {
+          return (
+            <div>
+              <input ref={this.myRef} type="text" placeholder="Type in your data" />
+              <button onClick={this.showData}>Show Data</button>
+              {/* use class function to avoid .then((result) => {}).catch((err) => {}); double execution*/}
+              <input ref={this.textRef} onBlur={this.showDataWhenBlue} placeholder="Show data when losing focus" />
+            </div>
+          );
+        }
+
+        showData = () => {
+          alert(this.myRef.current.value);
+        };
+
+        showDataWhenBlue = () => {
+          alert(this.textRef.current.value);
+        };
+      }
+
+      ReactDOM.render(<Demo />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

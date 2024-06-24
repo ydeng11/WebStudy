@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello react</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <script type="text/babel">
+      function Person(props) {
+        const { name, age } = props;
+        return (
+          <h2>
+            Hello, my name is {name}, and I'm {age} years old.
+          </h2>
+        );
+      }
+      // define propTypes and defaultProps outside the Person function
+      Person.propTypes = {
+        name: PropTypes.string.isRequired,
+        age: PropTypes.number,
+      };
+
+      Person.defaultProps = {
+        age: 10,
+      };
+
+      ReactDOM.render(<Person name="mike" age={20} />, document.getElementById("test1"));
+      ReactDOM.render(<Person name="Sara" />, document.getElementById("test2"));
+    </script>
+  </body>
+</html>

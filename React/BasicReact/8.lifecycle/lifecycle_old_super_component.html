@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lifecycle Super and Child</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      // Child component
+      class Child extends React.Component {
+        state = { car: "BMW" };
+        componentWillReceiveProps(props) {
+          console.log("@", "componentWillReceiveProps");
+        }
+
+        shouldComponentUpdate() {
+          console.log("@", "shouldComponentUpdate");
+          return true;
+        }
+
+        componentWillUpdate() {
+          console.log("@", "componentWillUpdate");
+        }
+
+        render() {
+          console.log("@", "render", this.pro);
+          return (
+            <div>
+              <h2>Car is {this.props.car}</h2>
+            </div>
+          );
+        }
+      }
+      // Parent component
+      class Parent extends React.Component {
+        state = { car: "Tesla" };
+        render() {
+          console.log("@", "render");
+          return (
+            <div>
+              <h2>I have a car</h2>
+              <button onClick={this.changeCar}>change a new car</button>
+              {/*Get the child component and pass in props this the child update components */}
+              <Child car={this.state.car} />
+            </div>
+          );
+        }
+        changeCar = () => {
+          this.setState({ car: "Toyota" });
+        };
+      }
+
+      ReactDOM.render(<Parent />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

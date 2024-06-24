@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Controlled Component</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Login extends React.Component {
+        /*
+        Advanced Function:
+        1. function is one of the parameters 
+        2. the return is also a function
+        */
+        render() {
+          return (
+            <form onSubmit={this.handleSubmit}>
+              User:
+              {/*the event listener must be a function so event can be feed into it by React*/}
+              <input type="text" onChange={this.saveFormData("username")} name="username" />
+              Password:
+              <input type="password" onChange={this.saveFormData("password")} name="password" />
+              <button>Submit</button>
+            </form>
+          );
+        }
+
+        handleSubmit = (event) => {
+          event.preventDefault();
+          const { username, password } = this.state;
+          alert(`Your username is ${username} and your password is ${password}`);
+        };
+
+        /*
+        Curring is the process of passing parameters to a function and returning a new function with the parameters 
+        already bound to it.
+        */
+        saveFormData = (key) => {
+          return (event) => {
+            this.setState({ [key]: event.target.value });
+          };
+        };
+      }
+
+      ReactDOM.render(<Login />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

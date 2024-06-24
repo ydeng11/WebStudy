@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Callback Ref</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Demo extends React.Component {
+        render() {
+          return (
+            <div>
+              <input ref={(c) => (this.input1 = c)} type="text" placeholder="Type in your data" />
+              <button onClick={this.showData}>Show Data</button>
+              <input onBlur={this.showDataWhenBlur} placeholder="Show data when losing focus" />
+            </div>
+          );
+        }
+
+        showData = () => {
+          alert(this.input1.value);
+        };
+
+        showDataWhenBlur = (event) => {
+          alert(event.target.value);
+        };
+      }
+
+      ReactDOM.render(<Demo />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

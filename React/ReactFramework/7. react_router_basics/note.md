@@ -1,0 +1,5 @@
+- BrowserRouter is provided by H5 which has worse compatibility than HashRouter since it is powered by H5
+- They will have different path
+    - HashRouter has a hashtag (#) in the url
+- BrowserRouter will preserve the state when refreshing the page because it stores in `history`
+    - but HashRouter will lose it because it doesn't use `history`

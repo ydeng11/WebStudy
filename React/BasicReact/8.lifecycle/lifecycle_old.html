@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lifecycle_OLD</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Count extends React.Component {
+        state = { count: 0 };
+        // Normally this does initialization of some functions
+        componentDidMount() {
+          console.log("@", "componentDidMount");
+        }
+
+        componentWillMount() {
+          console.log("@", "componentWillMount");
+        }
+
+        // Normally this stops the resource set up in componentDidMount
+        componentWillUnmount() {
+          console.log("@", "componentWillUnmount");
+        }
+
+        // Decide if the component should be updated by setState method
+        shouldComponentUpdate() {
+          console.log("@", "shouldComponentUpdate");
+          return true;
+        }
+
+        componentWillUpdate() {
+          console.log("@", "componentWillUpdate");
+        }
+
+        // Must have
+        render() {
+          console.log("@", "render");
+          return (
+            <div>
+              <h2>Sum is {this.state.count}</h2>
+              <button onClick={this.add}>Click me</button>
+              <button onClick={this.death}>Delete Component</button>
+              <button onClick={this.update}>Force update</button>
+            </div>
+          );
+        }
+
+        death = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test1"));
+        };
+
+        add = () => {
+          this.setState({ count: this.state.count + 1 });
+        };
+
+        update = () => {
+          this.forceUpdate();
+        };
+      }
+
+      ReactDOM.render(<Count />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

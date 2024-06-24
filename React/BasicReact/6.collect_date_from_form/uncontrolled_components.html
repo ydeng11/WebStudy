@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Uncontrolled Component</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Login extends React.Component {
+        render() {
+          return (
+            <form onSubmit={this.handleSubmit}>
+              User:
+              <input ref={(c) => (this.username = c)} type="text" name="username" />
+              Password:
+              <input ref={(c) => (this.password = c)} type="password" name="password" />
+              <button>Submit</button>
+            </form>
+          );
+        }
+
+        handleSubmit = (event) => {
+          event.preventDefault();
+          const { username, password } = this;
+          console.log(this);
+          alert(`Your username is ${username.value} and your password is ${password.value}`);
+        };
+      }
+
+      ReactDOM.render(<Login />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

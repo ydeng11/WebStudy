@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Controlled Component</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Login extends React.Component {
+        // Recommend to use controlled component so we can reduce the use of refs
+        // Controlled component is a component which saves the value to state and get the value from the state
+        // Uncontrolled component is a component which get values from the input on the fly without saving it in state
+        render() {
+          return (
+            <form onSubmit={this.handleSubmit}>
+              User:
+              <input type="text" onChange={this.saveUsername} name="username" />
+              Password:
+              <input type="password" onChange={this.savePassword} name="password" />
+              <button>Submit</button>
+            </form>
+          );
+        }
+        // the event will be feed into by React
+        handleSubmit = (event) => {
+          event.preventDefault();
+          const { username, password } = this.state;
+          alert(`Your username is ${username} and your password is ${password}`);
+        };
+
+        saveUsername = (event) => {
+          this.setState({ username: event.target.value });
+        };
+
+        savePassword = (event) => {
+          this.setState({ password: event.target.value });
+        };
+      }
+
+      ReactDOM.render(<Login />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset="utf-8">
+    <title>hello react</title>
+    <style>
+        .title{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        const data = "Hello React";
+        const id = "test"
+        const VDOM = (
+            /*
+            1. Only one root element
+            2. use {} to refer the declared variable
+            3. Element must be closed
+            4. use className to refer the class
+            */
+            <div>
+                <h2 className="title" id={id+"1"}>{data.toUpperCase()}</h2>
+                <h2 id={id+"2"}>{data.toLowerCase()}</h2>
+                <input type="text"/>
+            </div>
+        )
+        // 1. create a virtual DOM
+        // 2. render the virtual DOM to the real DOM
+        ReactDOM.render(VDOM, document.getElementById("test"));
+    </script>
+</body>
+
+</html>

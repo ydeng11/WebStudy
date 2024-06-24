@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>getSnapshotBeforeUpdate</title>
+    <style>
+      .list {
+        width: 200px;
+        height: 150px;
+        background-color: skyblue;
+        overflow: auto;
+      }
+      .news {
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      class Clock extends React.Component {
+        state = { date: new Date() };
+        componentDidMount() {
+          setInterval(() => this.setState({ date: new Date() }), 1000);
+        }
+
+        // React will check every level of the component tree and see if it needs to update.
+        // For data entries, we should use UNIQUE ID instead of index for the key attr otherwise
+        // the update of the entries will change the index and result in the unnecessary update of true DOM
+        // and other issues when there is input type element in the component.
+        // Note: React cannot use the value of input element to determine diffing as it doesn't have the
+        // knowledge about the rendered element so it can only check the props for diffing.
+        render() {
+          return (
+            <div>
+              <h2>Hello</h2>
+              <input type="text" />
+              <span>The time is: {this.state.date.toTimeString()}</span>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Clock />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

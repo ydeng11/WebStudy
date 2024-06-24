@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lifecycle</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Intro extends React.Component {
+        state = { opacity: 1 };
+        // Lifecycle: execute the code right after component mount
+        componentDidMount() {
+          this.timer = setInterval(() => {
+            let { opacity } = this.state;
+            opacity -= 0.1;
+            if (opacity <= 0) {
+              opacity = 1;
+            }
+            this.setState({ opacity });
+          }, 200);
+        }
+        // Lifecycle: execute the code right before component unmount
+        componentWillUnmount() {
+          clearInterval(this.timer);
+        }
+        render() {
+          return (
+            <div>
+              <h2 style={{ opacity: this.state.opacity }}>Cannot learn React without understanding the lifecycle</h2>
+              <button onClick={this.death}>Click me</button>
+            </div>
+          );
+        }
+
+        death = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test1"));
+        };
+      }
+
+      ReactDOM.render(<Intro />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

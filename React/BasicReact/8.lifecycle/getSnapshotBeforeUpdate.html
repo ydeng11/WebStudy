@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>getSnapshotBeforeUpdate</title>
+    <style>
+      .list {
+        width: 200px;
+        height: 150px;
+        background-color: skyblue;
+        overflow: auto;
+      }
+      .news {
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      class NewsList extends React.Component {
+        state = { list: [] };
+        getSnapshotBeforeUpdate(prevProps, prevState) {
+          console.log("@", "getSnapshotBeforeUpdate");
+          return this.list.scrollHeight;
+        }
+
+        componentDidUpdate(preProps, preState, snapshot) {
+          console.log("@", "componentDidUpdate", preProps, preState, snapshot);
+          this.list.scrollTop += this.list.scrollHeight - snapshot;
+        }
+
+        componentDidMount() {
+          setInterval(() => {
+            const news = "news" + (this.state.list.length + 1);
+            this.setState({
+              list: [news, ...this.state.list],
+            });
+          }, 1000);
+        }
+
+        render() {
+          return (
+            <div ref={(c) => (this.list = c)} className="list">
+              {this.state.list.map((news, index) => (
+                <div key={index} className="news">
+                  {news}
+                </div>
+              ))}
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<NewsList />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>String Ref</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- add data type restrictions -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <script type="text/babel">
+      class Demo extends React.Component {
+        // props is read-only
+        render() {
+          return (
+            <div>
+              <input ref="input1" type="text" placeholder="Type in your data" />
+              <button onClick={this.showData}>Show Data</button>
+              <input ref="input2" onBlur={this.showDataWhenBlue} placeholder="Show data when losing focus" />
+            </div>
+          );
+        }
+
+        showData = () => {
+          alert(this.refs.input1.value);
+        };
+
+        showDataWhenBlue = () => {
+          alert(this.refs.input2.value);
+        };
+      }
+
+      ReactDOM.render(<Demo />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>

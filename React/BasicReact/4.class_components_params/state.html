@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello react</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+      class Weather extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            isHot: true,
+          };
+          /*
+            When the element trigger the onClick event at line 39, the onClick will be assigned the function changeWeather.
+            However, the callback function is a function from the proto not the instantiated object and the this keyword will be undefined 
+            because 'use strict' in the function of class and babel. 
+            To solve this, we need use bind() method to bind the this keyword to the instantiated object and assigned this to the callback function.
+            note: bind() is to replace the this keyword in the function with the passed object.
+            */
+          this.changeWeather = this.changeWeather.bind(this);
+        }
+        changeWeather() {
+            // must use setState to update the state field
+          this.setState({
+            isHot: !this.state.isHot,
+          });
+        }
+        render() {
+          const isHot = this.state.isHot;
+          return (
+            <h2 onClick={this.changeWeather}>
+              Today is {isHot ? "hot" : "cold"}.
+            </h2>
+          );
+        }
+      }
+
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+    </script>
+  </body>
+</html>

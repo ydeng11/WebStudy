@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Callback Ref</title>
+    <style>
+      .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="test1"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- add data type restrictions -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <script type="text/babel">
+      class Demo extends React.Component {
+        // props is read-only
+        render() {
+          return (
+            <div>
+              <input
+                //inline function will result in double execution of ref_callback during component update
+                ref={(currentNode) => {
+                  this.input1 = currentNode;
+                }}
+                type="text"
+                placeholder="Type in your data"
+              />
+              <button onClick={this.showData}>Show Data</button>
+              {/* use class function to avoid .then((result) => {}).catch((err) => {}); double execution*/}
+              <input ref={this.saveInput} onBlur={this.showDataWhenBlue} placeholder="Show data when losing focus" />
+            </div>
+          );
+        }
+
+        showData = () => {
+          alert(this.input1.value);
+        };
+
+        showDataWhenBlue = () => {
+          alert(this.input2.value);
+        };
+
+        saveInput = (currentNode) => {
+          this.input2 = currentNode;
+        };
+      }
+
+      ReactDOM.render(<Demo />, document.getElementById("test1"));
+    </script>
+  </body>
+</html>
