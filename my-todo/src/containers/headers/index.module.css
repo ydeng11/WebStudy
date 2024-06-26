@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 120px;
+    background-color: #5face4;
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Add border radius for rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    color: #dbe8ec;
+    font-size: 24px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.date:hover {
+    color: #007bff; /* Change color on hover */
+}
