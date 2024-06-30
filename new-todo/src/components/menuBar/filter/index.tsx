@@ -13,23 +13,26 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useRef } from "react";
+import useStore, {CategoryFilter, HashtagFilter} from "@/components/stores/todoStore";
 
 type FilterRefs = {
     categoryRef: React.RefObject<string>;
     hashtagRef: React.RefObject<string>;
 };
 
-function submit(filterRefs: FilterRefs) {
+function submit(filterRefs: FilterRefs, setCategoryFilter : (categoryFilter: CategoryFilter) => void, setHashtagFilter : ((hashtagFilter: HashtagFilter) => void)) {
     console.log({
         category: filterRefs.categoryRef.current,
         hashtag: filterRefs.hashtagRef.current,
     });
+    setCategoryFilter({category: filterRefs.categoryRef?.current ?? "All"});
+    setHashtagFilter({hashtag: filterRefs.hashtagRef?.current ?? "All"});
 }
 
 export function Filters() {
-    const categoryRef = useRef<string>("");
-    const hashtagRef = useRef<string>("");
-
+    const categoryRef = useRef<string>("All");
+    const hashtagRef = useRef<string>("All");
+    const {setCategoryFilter, setHashtagFilter} = useStore();
     // get unique categories and hashtags here
 
     const handleValueChange = (ref: React.MutableRefObject<string>, value: string) => {
@@ -43,7 +46,7 @@ export function Filters() {
             </PopoverTrigger>
             <PopoverContent
                 className="w-80"
-                onPointerDownOutside={() => submit({ categoryRef, hashtagRef })}
+                onPointerDownOutside={() => submit({ categoryRef, hashtagRef}, setCategoryFilter, setHashtagFilter)}
             >
                 <div className="grid gap-4">
                     <div className="space-y-2">
@@ -55,12 +58,11 @@ export function Filters() {
                             <Label htmlFor="category">Category</Label>
                             <Select onValueChange={(value) => handleValueChange(categoryRef, value)}>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Theme" />
+                                    <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="light">Light</SelectItem>
-                                    <SelectItem value="dark">Dark</SelectItem>
-                                    <SelectItem value="system">System</SelectItem>
+                                    <SelectItem value="study">Study</SelectItem>
+                                    <SelectItem value="entertainment">Entertainment</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
@@ -68,12 +70,11 @@ export function Filters() {
                             <Label htmlFor="hashtag">Hashtag</Label>
                             <Select onValueChange={(value) => handleValueChange(hashtagRef, value)}>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Theme" />
+                                    <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="light">Light</SelectItem>
-                                    <SelectItem value="dark">Dark</SelectItem>
-                                    <SelectItem value="system">System</SelectItem>
+                                    <SelectItem value="typescript">Typescript</SelectItem>
+                                    <SelectItem value="rest">Rest</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>

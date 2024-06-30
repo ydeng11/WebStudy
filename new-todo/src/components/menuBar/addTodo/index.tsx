@@ -19,11 +19,11 @@ type AddTodoRefs = {
 };
 
 function submit(addTodoRefs: AddTodoRefs, addTodo: (todo: Ttodo) => void, closeDialog: () => void) {
-    const hashTagArray = (addTodoRefs.hashTag.current?.value ?? '').split(',').map(tag => tag.trim());
+    const hashTagArray = (addTodoRefs.hashTag.current?.value ?? '').split(',').map(tag => tag.trim().toLowerCase());
     const newTodo: Ttodo = {
         id: parseInt(uuidv4()),
         content: addTodoRefs.content.current?.value ?? '',
-        category: addTodoRefs.category.current?.value ?? '',
+        category: addTodoRefs.category.current?.value.toLowerCase() ?? '',
         hashtag: hashTagArray,
         isDone: false,
         createdAt: new Date()
