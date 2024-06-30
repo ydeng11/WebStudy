@@ -4,31 +4,10 @@ import {Filters} from "@/components/menuBar/filter";
 import Header from "@/components/header";
 import TodoList from "@/components/display/listing";
 import Today from "@/components/display/today";
-import {Ttodo} from "@/components/utils/types.tsx";
 import {CategoryList} from "@/components/menuBar/categoryList";
-// import CategoryList from "@/components/menuBar/categoryList";
+import {HashtagList} from "@/components/menuBar/hashtagList";
 
 const Layout: React.FC = () => {
-
-    const todos: Ttodo[] = [
-        {
-            id: 1,
-            content: "Test",
-            category: "Work",
-            hashtag: ["#test"],
-            createdAt: new Date(),
-            isDone: false
-        },
-        {
-            id: 2,
-            content: "Test2",
-            category: "Work",
-            hashtag: ["#test"],
-            createdAt: new Date(),
-            isDone: false
-        }
-    ];
-
     return (
         <div>
             <Header />
@@ -38,10 +17,11 @@ const Layout: React.FC = () => {
                         <AddTodo />
                         <Filters />
                         <CategoryList />
+                        <HashtagList />
                     </div>
                     <div className="w-4/5 flex flex-col items-start">
                         <Today />
-                        <TodoList todos={todos} />
+                        <TodoList/>
                     </div>
                 </div>
             </div>
