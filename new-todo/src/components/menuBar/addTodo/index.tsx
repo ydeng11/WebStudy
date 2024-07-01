@@ -2,14 +2,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button } from "@/components/ui/button.tsx";
 import {
     Dialog,
-    DialogContent,
-    DialogFooter,
+    DialogContent, DialogDescription,
+    DialogFooter, DialogHeader, DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Ttodo } from "@/components/utils/types.tsx";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import useStore from "@/components/stores/todoStore";
 
 type AddTodoRefs = {
@@ -49,6 +49,12 @@ export default function AddTodo() {
                 <Button variant="ghost" size="lg">Add new todo</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[600px]">
+                <DialogHeader>
+                    <DialogTitle>Add a new todo</DialogTitle>
+                    <DialogDescription>
+                        Add a new todo to your todo list.
+                    </DialogDescription>
+                </DialogHeader>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
