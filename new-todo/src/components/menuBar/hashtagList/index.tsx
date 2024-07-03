@@ -5,7 +5,7 @@ import {Fragment} from "react";
 
 export const HashtagList = () => {
     const {todos} = useStore();
-    const tagList: string[] = todos.reduce<string[]>((previousValue, currentValue) => [...previousValue, ...currentValue.hashtag], []);
+    const tagList: string[] = todos.reduce<string[]>((previousValue, currentValue) => [...previousValue, ...currentValue.hashtags], []);
 
     return (
         <ScrollArea className="rounded-md pl-4 max-w-xs">

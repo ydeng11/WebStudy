@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { Ttodo } from "@/components/utils/types.tsx";
 import React, { useRef, useState } from "react";
 import useStore from "@/components/stores/todoStore";
+import {useTodoMutations} from "@/components/utils/useTodoMutations.tsx";
 
 type AddTodoRefs = {
     content: React.RefObject<HTMLInputElement>;
@@ -18,17 +19,19 @@ type AddTodoRefs = {
     hashTag: React.RefObject<HTMLInputElement>;
 };
 
-function submit(addTodoRefs: AddTodoRefs, addTodo: (todo: Ttodo) => void, closeDialog: () => void) {
+function submit(addTodoRefs: AddTodoRefs, addTodoMutation: (todo: Ttodo) => void, addTodo: (todo: Ttodo) => void, closeDialog: () => void) {
     const hashTagArray = (addTodoRefs.hashTag.current?.value ?? '').split(',').map(tag => tag.trim().toLowerCase());
     const newTodo: Ttodo = {
-        id: parseInt(uuidv4()),
+        id: uuidv4(),
         content: addTodoRefs.content.current?.value ?? '',
         category: addTodoRefs.category.current?.value.toLowerCase() ?? '',
-        hashtag: hashTagArray,
-        isDone: false,
-        createdAt: new Date()
+        hashtags: hashTagArray,
+        isDone: 0,
+        createdAt: new Date(),
+        isDeleted: 0,
     };
     addTodo(newTodo);
+    addTodoMutation(newTodo);
     closeDialog();
 }
 
@@ -38,7 +41,7 @@ export default function AddTodo() {
     const categoryRef = useRef<HTMLInputElement>(null);
     const hashTagRef = useRef<HTMLInputElement>(null);
     const [open, setOpen] = useState(false);
-
+    const {addTodoMutation} = useTodoMutations();
     const closeDialog = () => {
         setOpen(false);
     };
@@ -58,7 +61,7 @@ export default function AddTodo() {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        submit({ content: contentRef, category: categoryRef, hashTag: hashTagRef }, addTodo, closeDialog);
+                        submit({ content: contentRef, category: categoryRef, hashTag: hashTagRef }, addTodoMutation, addTodo, closeDialog);
                     }}
                 >
                     <div className="grid gap-4 py-4">

@@ -13,8 +13,8 @@ export type TodoState = {
     todos: Ttodo[];
     setTodos: (todos: Ttodo[]) => void;
     addTodo: (todo: Ttodo) => void;
-    deleteTodo: (id: number) => void;
-    updateTodo: (id: number) => void;
+    deleteTodo: (id: string) => void;
+    toggleTodo: (id: string) => void;
     categoryFilter: CategoryFilter;
     hashtagFilter: HashtagFilter;
     setCategoryFilter: (categoryFilter: CategoryFilter) => void;
@@ -25,9 +25,9 @@ const useStore = create<TodoState>((set) => ({
     todos: [],
     setTodos: (todos: Ttodo[]) => set(() => ({todos})),
     addTodo: (todo: Ttodo) => set((state) => ({ todos: [...state.todos, todo] })),
-    deleteTodo: (id: number) => set((state) => ({ todos: state.todos.filter(todo => todo.id !== id) })),
-    updateTodo: (id: number) => set((state) => ({
-        todos: state.todos.map(todo => todo.id === id ? { ...todo, isDone: !todo.isDone } : todo)
+    deleteTodo: (id: string) => set((state) => ({ todos: state.todos.filter(todo => todo.id !== id) })),
+    toggleTodo: (id: string) => set((state) => ({
+        todos: state.todos.map(todo => todo.id === id ? { ...todo, isDone: todo.isDone === 0 ? 1 : 0 } : todo)
     })),
     categoryFilter: {category: 'All'},
     hashtagFilter: {hashtag: 'All'},

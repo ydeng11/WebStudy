@@ -2,7 +2,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import { Ttodo } from '@/components/utils/types.tsx';
 
 const addTodo = async (todo: Ttodo): Promise<Ttodo> => {
-    const response = await fetch("http://localhost:8080/1.0/todo/all", {
+    const response = await fetch("http://localhost:8080/1.0/todo/new", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

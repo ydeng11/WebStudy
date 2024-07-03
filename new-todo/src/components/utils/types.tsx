@@ -1,8 +1,9 @@
 export type Ttodo = {
-    id: number;
+    id: string;
     content: string;
     category: string;
-    hashtag: string[];
-    isDone: boolean;
+    hashtags: string[];
+    isDone: number;
     createdAt: Date;
+    isDeleted: number;
 };
