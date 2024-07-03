@@ -7,6 +7,9 @@ import styles from "./index.module.css";
 
 const TodoItem = (props: Ttodo) => {
     const {deleteTodo, updateTodo} = useStore();
+
+
+
     const [isMouseIn, setIsMouseIn] = useState(false);
     return (
 

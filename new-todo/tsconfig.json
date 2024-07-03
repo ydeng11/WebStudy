@@ -15,5 +15,6 @@
         "./src/*"
       ]
     }
-  }
+  },
+//  "exclude": ["src/setupProxy.js"]
 }
