@@ -26,9 +26,14 @@ const useStore = create<TodoState>((set) => ({
     setTodos: (todos: Ttodo[]) => set(() => ({todos})),
     addTodo: (todo: Ttodo) => set((state) => ({ todos: [...state.todos, todo] })),
     deleteTodo: (id: string) => set((state) => ({ todos: state.todos.filter(todo => todo.id !== id) })),
-    toggleTodo: (id: string) => set((state) => ({
-        todos: state.todos.map(todo => todo.id === id ? { ...todo, isDone: todo.isDone === 0 ? 1 : 0 } : todo)
-    })),
+    toggleTodo: (id: string) => {
+        console.log("toggleTodo");
+        set((state) => ({
+            todos: state.todos.map((todo) =>
+                todo.id === id ? { ...todo, isDone: todo.isDone === 1 ? 0 : 1 } : todo
+            ),
+        }));
+    },
     categoryFilter: {category: 'All'},
     hashtagFilter: {hashtag: 'All'},
     setCategoryFilter: (categoryFilter: CategoryFilter) => set(() => ({categoryFilter})),
