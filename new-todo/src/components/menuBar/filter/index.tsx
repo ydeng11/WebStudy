@@ -35,6 +35,7 @@ export function Filters() {
     const handleValueChange = (ref: React.MutableRefObject<string>, value: string) => {
         ref.current = value;
     };
+
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -54,9 +55,10 @@ export function Filters() {
                             <Label htmlFor="category">Category</Label>
                             <Select onValueChange={(value) => handleValueChange(categoryRef, value)}>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="All" />
+                                    <SelectValue placeholder="Select a category" defaultValue="All"/>
                                 </SelectTrigger>
                                 <SelectContent>
+                                    <SelectItem value="All">All</SelectItem>
                                     {categoryList.map((category, index) => (
                                         <SelectItem key={index} value={category}>
                                             {category}
@@ -68,9 +70,10 @@ export function Filters() {
                             <Label htmlFor="hashtag">Hashtag</Label>
                             <Select onValueChange={(value) => handleValueChange(hashtagRef, value)}>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="All" />
+                                    <SelectValue placeholder="Select a hashtag" defaultValue="All"/>
                                 </SelectTrigger>
                                 <SelectContent>
+                                    <SelectItem value="All">All</SelectItem>
                                     {hashtagList.map((hashtag, index) => (
                                         <SelectItem key={index} value={hashtag}>
                                             {hashtag}

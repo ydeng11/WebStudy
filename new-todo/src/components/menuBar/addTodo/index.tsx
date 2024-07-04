@@ -19,7 +19,7 @@ type AddTodoRefs = {
     hashTag: React.RefObject<HTMLInputElement>;
 };
 
-function submit(addTodoRefs: AddTodoRefs, addTodoMutation: (todo: Ttodo) => void, addTodo: (todo: Ttodo) => void, closeDialog: () => void) {
+function submit(addTodoRefs: AddTodoRefs, addTodoMutation: (todo: Ttodo) => void, incrementCount: () => void, closeDialog: () => void) {
     const hashTagArray = (addTodoRefs.hashTag.current?.value ?? '').split(',').map(tag => tag.trim().toLowerCase());
     const newTodo: Ttodo = {
         id: uuidv4(),
@@ -30,13 +30,13 @@ function submit(addTodoRefs: AddTodoRefs, addTodoMutation: (todo: Ttodo) => void
         createdAt: new Date(),
         isDeleted: 0,
     };
-    addTodo(newTodo);
+    incrementCount();
     addTodoMutation(newTodo);
     closeDialog();
 }
 
 export default function AddTodo() {
-    const { addTodo } = useStore();
+    const {incrementCount} = useStore();
     const contentRef = useRef<HTMLInputElement>(null);
     const categoryRef = useRef<HTMLInputElement>(null);
     const hashTagRef = useRef<HTMLInputElement>(null);
@@ -61,7 +61,7 @@ export default function AddTodo() {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        submit({ content: contentRef, category: categoryRef, hashTag: hashTagRef }, addTodoMutation, addTodo, closeDialog);
+                        submit({ content: contentRef, category: categoryRef, hashTag: hashTagRef }, addTodoMutation, incrementCount, closeDialog);
                     }}
                 >
                     <div className="grid gap-4 py-4">
