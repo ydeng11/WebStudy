@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { Ttodo } from "@/components/utils/types.tsx";
+import { Ttodo } from "@/components/types";
 import { Button } from "@/components/ui/button.tsx";
 import styles from "./index.module.css";
-import { useTodoMutations } from "@/components/utils/useTodoMutations.tsx";
+import { useTodoMutations } from "@/components/hooks/useTodoMutations.tsx";
 import useStore from "@/components/stores/todoStore";
 
 function handleDelete(todo: Ttodo, incrementCount: () => void, updateTodoMutation: (todo: Ttodo) => void) {

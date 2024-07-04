@@ -1,22 +1,9 @@
 import TodoItem from "@/components/display/todoItem";
 import useStore from "@/components/stores/todoStore";
-import {useQuery} from "@tanstack/react-query";
-import {Ttodo} from "@/components/utils/types.tsx";
+import {useTodosQuery} from "@/components/hooks";
 
 const TodoList = () => {
-    const { data } = useQuery<Ttodo[]>({
-        queryKey: ['todos'],
-        initialData: [],
-        queryFn: async () => {
-            const response = await fetch("http://localhost:8080/1.0/todo/all");
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            } else {
-                console.log("Fetch data!")
-            }
-            const jsonData = await response.json();
-            return jsonData as Ttodo[]},
-    })
+    const { data } = useTodosQuery()
 
     const {categoryFilter, hashtagFilter} = useStore();
     const filteredTodos = data

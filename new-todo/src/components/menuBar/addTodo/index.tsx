@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/dialog.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import { Ttodo } from "@/components/utils/types.tsx";
+import { Ttodo } from "@/components/types";
 import React, { useRef, useState } from "react";
 import useStore from "@/components/stores/todoStore";
-import {useTodoMutations} from "@/components/utils/useTodoMutations.tsx";
+import {useTodoMutations} from "@/components/hooks/useTodoMutations.tsx";
 
 type AddTodoRefs = {
     content: React.RefObject<HTMLInputElement>;

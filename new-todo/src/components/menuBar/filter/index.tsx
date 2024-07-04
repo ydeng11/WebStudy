@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useRef } from "react";
 import useStore, {CategoryFilter, HashtagFilter} from "@/components/stores/todoStore";
+import {useCategoriesQuery, useHashtagsQuery} from "@/components/hooks";
 
 type FilterRefs = {
     categoryRef: React.RefObject<string>;
@@ -21,10 +22,6 @@ type FilterRefs = {
 };
 
 function submit(filterRefs: FilterRefs, setCategoryFilter : (categoryFilter: CategoryFilter) => void, setHashtagFilter : ((hashtagFilter: HashtagFilter) => void)) {
-    console.log({
-        category: filterRefs.categoryRef.current,
-        hashtag: filterRefs.hashtagRef.current,
-    });
     setCategoryFilter({category: filterRefs.categoryRef?.current ?? "All"});
     setHashtagFilter({hashtag: filterRefs.hashtagRef?.current ?? "All"});
 }
@@ -33,12 +30,11 @@ export function Filters() {
     const categoryRef = useRef<string>("All");
     const hashtagRef = useRef<string>("All");
     const {setCategoryFilter, setHashtagFilter} = useStore();
-    // get unique categories and hashtags here
-
+    const { data: categoryList } = useCategoriesQuery();
+    const { data: hashtagList} = useHashtagsQuery();
     const handleValueChange = (ref: React.MutableRefObject<string>, value: string) => {
         ref.current = value;
     };
-
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -61,8 +57,10 @@ export function Filters() {
                                     <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="study">Study</SelectItem>
-                                    <SelectItem value="entertainment">Entertainment</SelectItem>
+                                    {categoryList.map((category, index) => (
+                                        <SelectItem key={index} value={category}>
+                                            {category}
+                                        </SelectItem>))}
                                 </SelectContent>
                             </Select>
                         </div>
@@ -73,8 +71,10 @@ export function Filters() {
                                     <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="typescript">Typescript</SelectItem>
-                                    <SelectItem value="rest">Rest</SelectItem>
+                                    {hashtagList.map((hashtag, index) => (
+                                        <SelectItem key={index} value={hashtag}>
+                                            {hashtag}
+                                        </SelectItem>))}
                                 </SelectContent>
                             </Select>
                         </div>
