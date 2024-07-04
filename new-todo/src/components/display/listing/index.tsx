@@ -11,12 +11,14 @@ const TodoList = () => {
             const response = await fetch("http://localhost:8080/1.0/todo/all");
             if (!response.ok) {
                 throw new Error("Network response was not ok");
+            } else {
+                console.log("Fetch data!")
             }
             const jsonData = await response.json();
-            return jsonData as Ttodo[]}
+            return jsonData as Ttodo[]},
     })
-    const {categoryFilter, hashtagFilter} = useStore();
 
+    const {categoryFilter, hashtagFilter} = useStore();
     const filteredTodos = data
         .filter((todo) => (categoryFilter.category === 'All' || todo.category.toLowerCase() === categoryFilter.category.toLowerCase()))
         .filter((todo) => (hashtagFilter.hashtag === 'All' || todo.hashtags.includes(hashtagFilter.hashtag.toLowerCase())))
